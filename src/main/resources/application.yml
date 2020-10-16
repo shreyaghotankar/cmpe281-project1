@@ -1,0 +1,54 @@
+spring:
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://<db endpoint>
+    username: X
+    password: X
+  jpa:
+    hibernate:
+      ddl-auto: update
+    generate-ddl: true
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+
+  security:
+    oauth2:
+      client:
+        registration:
+          cognito:
+            clientId: X
+            clientSecret: X
+            scope: openid
+            redirect-uri: X
+            clientName: X
+        provider:
+          cognito:
+#             
+            issuerUri: https://cognito-idp.<region>.amazonaws.com/<userpoolid>
+            user-name-attribute: cognito:username
+            
+amazonProperties:
+  endpointUrl: https://s3.<region>.amazonaws.com
+  accessKey: X
+  secretKey: X
+  bucketName: X
+  
+  logging:
+    file: logfile.log
+    pattern:
+      console: "%d %-5level %logger : %msg%n"
+      file: "%d %-5level [%thread] %logger : %msg%n"
+    level:
+      org.springframework.web: DEBUG
+      com.example.fileuploader: DEBUG
+      org.hibernate: DEBUG
+
+      
+  http:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+      
