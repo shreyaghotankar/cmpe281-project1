@@ -3,6 +3,7 @@ package com.whippystore.storage.security;
 import java.net.URI;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -17,12 +18,15 @@ import com.whippystore.storage.customfilter.OAuth2AuthenticationFilter;
 @EnableGlobalMethodSecurity(prePostEnabled = true) 
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
+	@Value("${logout.uri}")
+	private String logoutUri;
+	
 	@Autowired
     private ClientRegistrationRepository clientRegistrationRepository;
 
     OidcClientInitiatedLogoutSuccessHandler oidcLogoutSuccessHandler() {
         OidcClientInitiatedLogoutSuccessHandler logoutHandler = new OidcClientInitiatedLogoutSuccessHandler(clientRegistrationRepository);
-        logoutHandler.setPostLogoutRedirectUri(URI.create("http://localhost:5000/"));
+        logoutHandler.setPostLogoutRedirectUri(logoutUri);
         return logoutHandler;
     }
 
@@ -47,4 +51,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .logoutSuccessUrl("/")
             .and().logout().logoutSuccessHandler(oidcLogoutSuccessHandler());
     }
+	
+	
 }

@@ -13,6 +13,7 @@ import java.sql.Timestamp;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -48,6 +49,9 @@ public class UserController {
 	    
 	    @Autowired
 	    private UserUploadFileRecordDaoImpl dao;
+	    
+	    @Value("${cloudfront.uri}")
+		private String cloudfrontUri;
 
 		/*
 		 * @Autowired private UserUploadFileRecordDaoImpl dao;
@@ -133,8 +137,10 @@ try {
 		 @GetMapping("/download")
 		 public ResponseEntity<byte[]> download(@RequestParam("name") String name) throws IOException {
 
-		     //System.out.println("Hi");
-		     URL url = new URL("CloudFrontURL" + name);
+		     
+			 
+			 
+		     URL url = new URL(cloudfrontUri + name);
 		     byte[] bytes = IOUtils.toByteArray(url);
 
 		     String fileName = URLEncoder.encode(name, "UTF-8").replaceAll("\\+", "%20");

@@ -28,7 +28,7 @@
 						<p>Hello, <span th:text="${#authentication.principal.fullName}"></span> </p>
 						
 						<div sec:authorize="hasRole('ADMIN')" align="right">
-						 <a th:href="@{/admin}">View Admin Dashboard</a>
+						 <a th:href="@{/admin}">Admin Dashboard</a>
 						</div>
 						
                          <section class="my-5">
@@ -58,9 +58,9 @@
                             <td style="text-align:center">Description</td>
                             <td style="text-align:center">File Upload time</td>
                             <td style="text-align:center">File Update time</td>
-                            <td style="text-align:center"><i class="fa fa-trash-o" style="font-size:35px"></i></td>
-                            <td style="text-align:center"><i class="fa fa-download" style="font-size:35px"></i></td>
-                            <td style="text-align:center"><i class="fa fa-edit" style="font-size:35px"></i></td>
+                            <td></td>
+                            <td></td>
+                            <td></i></td>
                             
                         </tr>
                         </thead>
@@ -76,13 +76,13 @@
                             <td th:text="${#dates.format(record.updatedTime, 'MM-dd-yyyy HH:mm:ss')}"></td>
                             <td>
                                 <form method="POST" th:action="@{/delete(id=${record.id})}">
-                                    <button type="submit" name="submit" value="value" class="link-button">Delete <i class="fa fa-trash-o" style="font-size:24px;color:red"></i></button>
+                                    <button type="submit" name="submit" value="value" class="link-button"><i class="fa fa-trash-o" style="font-size:24px;color:red"></i></button>
                                 </form>
                             </td>
 
 							<td>
 
-  							 <a th:href="@{/download/(name=${record.path})}"> Download
+  							 <a th:href="@{/download/(name=${record.path})}">
   							 <i class="fa fa-download" style="font-size:24px"></i></a> <br/>				
 							
 							</td>
@@ -91,7 +91,7 @@
                                 <form method="post" th:action="@{/edit(id=${record.id})}" enctype="multipart/form-data">
                                     <div class="form-group">
                                         <input type="file" th:name="file" class="form-control-file"><br>
-                                        <button type="submit" class="btn btn-primary" style="height:40px;width:50px">Edit</button>
+                                        <button type="submit" class="btn btn-primary" style="height:40px;width:50px"><i class="fa fa-edit" style="font-size:24px"></i></button>
                                     </div>
                                     
                                 </form>

@@ -28,8 +28,19 @@ public class OAuth2AuthenticationFilter extends GenericFilter {
             if(authentication != null && (authentication instanceof OAuth2AuthenticationToken)) {
                 grantedAuthorities.addAll(authentication.getAuthorities());
                 
-                if (hasAdminRole(authentication) && !isAdminRoleAdded(authentication)) {
-                    grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+				/*
+				 * if (hasAdminRole(authentication) && !isAdminRoleAdded(authentication)) {
+				 * grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_ADMIN")); }
+				 */
+                
+                if ("okta".equalsIgnoreCase(detectIdentityProvider(authentication))) {
+                    if (hasOktaAdminRole(authentication) && !isAdminRoleAdded(authentication)) {
+                        grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+                    }
+                } else {
+                    if (hasCognitoAdminRole(authentication) && !isAdminRoleAdded(authentication)) {
+                        grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+                    }
                 }
                 
                 OAuth2AuthenticationWrapperToken token = new OAuth2AuthenticationWrapperToken((OAuth2AuthenticationToken) authentication, grantedAuthorities);
@@ -43,7 +54,28 @@ public class OAuth2AuthenticationFilter extends GenericFilter {
         filterChain.doFilter(request, response);
     }
     
-    private boolean hasAdminRole(Authentication authentication) {
+	/*
+	 * private boolean hasAdminRole(Authentication authentication) { if
+	 * (((OAuth2User)authentication.getPrincipal()).getAttribute("cognito:roles") !=
+	 * null) { return
+	 * ((OAuth2User)authentication.getPrincipal()).getAttribute("cognito:roles").
+	 * toString().contains("admin"); } else { return false; } }
+	 * 
+	 * private boolean isAdminRoleAdded(Authentication authentication) { for
+	 * (GrantedAuthority authority : authentication.getAuthorities()) { if
+	 * ("ROLE_ADMIN".equalsIgnoreCase(authority.getAuthority())) { return true; } }
+	 * return false; }
+	 */
+
+    private boolean hasOktaAdminRole(Authentication authentication) {
+        if (((OAuth2User)authentication.getPrincipal()).getAttribute("groups") != null) {
+            return ((OAuth2User)authentication.getPrincipal()).getAttribute("groups").toString().contains("Admin");
+        } else {
+            return false;
+        }
+    }
+
+    private boolean hasCognitoAdminRole(Authentication authentication) {
         if (((OAuth2User)authentication.getPrincipal()).getAttribute("cognito:roles") != null) {
             return ((OAuth2User)authentication.getPrincipal()).getAttribute("cognito:roles").toString().contains("admin");
         } else {
@@ -60,4 +92,12 @@ public class OAuth2AuthenticationFilter extends GenericFilter {
         return false;
     }
 
+    private String detectIdentityProvider(Authentication authentication) {
+        if ("okta".equalsIgnoreCase(((OAuth2AuthenticationToken) authentication).getAuthorizedClientRegistrationId())) {
+            return "okta";
+        } else {
+            return "cognito";
+        }
+    }
+    
 }
