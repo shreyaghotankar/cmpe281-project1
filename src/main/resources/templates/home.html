@@ -14,7 +14,6 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-
 <title>WhippyStore</title>
 </head>
 <body>
@@ -25,7 +24,7 @@
 
 				<div sec:authorize="isAuthenticated()">
 					<div class="box">
-						<p>Hello, <span th:text="${#authentication.principal.fullName}"></span> </p>
+						<p style="color:purple; font-size:25px">Hello, <span th:text="${#authentication.principal.fullName}"></span> </p>
 						
 						<div sec:authorize="hasRole('ADMIN')" align="right">
 						 <a th:href="@{/admin}">Admin Dashboard</a>
@@ -36,13 +35,14 @@
                         <div class="row">
                             <div class="col-md-8 mx-auto">
                             <p th:text="${message}" th:if="${message ne null}" class="alert alert-primary"></p>
+                            <p th:text="${errorMessage}" th:if="${errorMessage ne null}" class="alert alert-danger"></p>
                                 <h3>Upload File</h3>
                                 <form method="post" th:action="@{/upload}" enctype="multipart/form-data">
                                     <div class="form-group">
                                         <input type="file" th:name="file" class="form-control-file"><br>
                                         <input type="text" th:name="description" class="form-control" placeholder="Enter description" size="18"/>
                                     </div>
-                                    <button type="submit" class="btn btn-primary">Upload File</button>
+                                    <button type="submit" class="btn btn-primary">Upload</button>
                                 </form>
                             </div>
                         </div>
@@ -54,13 +54,12 @@
                         <thead>
                         <tr>
                             <td style="text-align:center">File Name</td>
-                            <td style="text-align:center">Id</td>
                             <td style="text-align:center">Description</td>
                             <td style="text-align:center">File Upload time</td>
                             <td style="text-align:center">File Update time</td>
                             <td></td>
                             <td></td>
-                            <td></i></td>
+                            <td></td>
                             
                         </tr>
                         </thead>
@@ -70,7 +69,6 @@
                         </tr>
                         <tr th:each = "record: ${records}">
                             <td th:text="${record.filename}"></td>
-                            <td th:text="${record.id}"></td>
                             <td th:text="${record.description}"></td>
                             <td th:text="${#dates.format(record.createdTime, 'MM-dd-yyyy HH:mm:ss')}"></td>
                             <td th:text="${#dates.format(record.updatedTime, 'MM-dd-yyyy HH:mm:ss')}"></td>
@@ -91,7 +89,7 @@
                                 <form method="post" th:action="@{/edit(id=${record.id})}" enctype="multipart/form-data">
                                     <div class="form-group">
                                         <input type="file" th:name="file" class="form-control-file"><br>
-                                        <button type="submit" class="btn btn-primary" style="height:40px;width:50px"><i class="fa fa-edit" style="font-size:24px"></i></button>
+                                        <button type="submit" class="btn btn-primary" style="font-size:10px"><i class="fa fa-edit" style="font-size:20px"></i></button>
                                     </div>
                                     
                                 </form>
@@ -107,9 +105,9 @@
 				<div sec:authorize="isAnonymous()">
 					<div class="box">
 					    <a class="button login btn-info"
-							th:href="@{/oauth2/authorization/okta}">Login with Okta</a><br/><br/>
-						<a class="button login btn-secondary"
-							th:href="@{/oauth2/authorization/cognito}">Login with Cognito</a>
+							th:href="@{/oauth2/authorization/okta}">Login</a><br/><br/>
+<!-- 						<a class="button login btn-secondary"
+							th:href="@{/oauth2/authorization/cognito}">Login with Cognito</a> -->
 					</div>
 				</div>
 				
