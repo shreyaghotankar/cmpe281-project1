@@ -1,9 +1,13 @@
+server:
+   port: 5000
+   tomcat:
+     max-swallow-size: -1
 spring:
   datasource:
     driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://<db endpoint>
-    username: X
-    password: X
+    url: jdbc:mysql://<rds db endpoint>:3306/dbwhippystore
+    username: XXXX
+    password: XXXX
   jpa:
     hibernate:
       ddl-auto: update
@@ -19,36 +23,46 @@ spring:
       client:
         registration:
           cognito:
-            clientId: X
-            clientSecret: X
+            clientId: XXXX
+            clientSecret: XXXX
             scope: openid
-            redirect-uri: X
-            clientName: X
+            redirect-uri: http://localhost:5000/login/oauth2/code/cognito
+            clientName: XXXX
+            
+          okta:
+            client-id: XXXX
+            client-secret: XXXX
+            rolesClaim: groups
+           
         provider:
           cognito:
-#             
-            issuerUri: https://cognito-idp.<region>.amazonaws.com/<userpoolid>
+            issuerUri: https://cognito-idp.<region>.amazonaws.com/<pool-id>
             user-name-attribute: cognito:username
+            
+          okta:
+            issuer-uri: X
+            
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 10MB   
+      
+ 
             
 amazonProperties:
   endpointUrl: https://s3.<region>.amazonaws.com
-  accessKey: X
-  secretKey: X
-  bucketName: X
+  accessKey: XXXX
+  secretKey: XXXX
+  bucketName: <bucket-name>
   
-  logging:
-    file: logfile.log
-    pattern:
-      console: "%d %-5level %logger : %msg%n"
-      file: "%d %-5level [%thread] %logger : %msg%n"
-    level:
-      org.springframework.web: DEBUG
-      com.example.fileuploader: DEBUG
-      org.hibernate: DEBUG
+  
 
       
-  http:
-    multipart:
-      max-file-size: 10MB
-      max-request-size: 10MB
       
+      
+logout:
+  uri: http://localhost:5000/
+  
+cloudfront:
+  uri: <cloudfront-distribution>
