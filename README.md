@@ -4,4 +4,4 @@ Course: Cloud Technologies
 Professor: Sanjay Garje
 Student: Shreya Ghotankar
 
-![Architecture](https://www.github.com/cmpe281-project1/images/Project_1- Architecture.jpg)
+![Architecture](https://github.com/shreyaghotankar/cmpe281-project1/tree/master/images/Project_1- Architecture.jpg)
