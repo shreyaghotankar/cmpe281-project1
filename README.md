@@ -4,5 +4,18 @@
 ### Professor: Sanjay Garje
 ### Student: Shreya Ghotankar
 
-Architecture Diagram
+#### Architecture Diagram
 ![](images/Architecture.jpg)
+
+#### UI Screenshots
+![](images/WelcomePage.PNG)
+
+![](images/Login_page.PNG)
+
+![](images/SingUp_page.PNG)
+
+![](images/User.PNG)
+
+![](images/Admin.PNG)
+
+
