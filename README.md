@@ -8,7 +8,7 @@
 ![](images/Architecture.jpg)
 
 #### UI Screenshots
-![](images/WelcomePage.PNG)
+![](images/Welcome.PNG)
 
 ![](images/Login_page.PNG)
 
