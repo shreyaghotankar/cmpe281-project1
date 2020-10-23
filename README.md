@@ -4,6 +4,10 @@
 ### Professor: Sanjay Garje
 ### Student: Shreya Ghotankar
 
+##### Introduction:
+A web application that allows users to signup and upload files, delete, download, edit their existing files.
+Used AWS resources to buid this application.
+
 #### Architecture Diagram
 ![](images/Architecture.jpg)
 
