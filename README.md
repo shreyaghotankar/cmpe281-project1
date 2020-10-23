@@ -6,7 +6,7 @@
 
 ##### Introduction:
 A web application that allows users to signup and upload files, delete, download, edit their existing files.
-Used AWS resources to buid this application.
+This is a spring boot application build using AWS resources.
 
 #### Architecture Diagram
 ![](images/Architecture.jpg)
